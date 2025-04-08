@@ -1,11 +1,12 @@
-import { Routes } from '@angular/router';
-import {RegisterComponent} from './Components/register/register.component';
-import {MeccsComponent} from './Components/meccs/meccs.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import {LoginComponent} from './Components/login/login.component';
+import {RegisterComponent} from './Components/register/register.component';
 import {HomeComponent} from './Components/home/home.component';
+import {MeccsComponent} from './Components/meccs/meccs.component';
 import {CsapatokComponent} from './Components/csapatok/csapatok.component';
 
-export const routes: Routes = [
+const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: "full"},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
@@ -13,3 +14,8 @@ export const routes: Routes = [
   {path: 'csapatok', component: CsapatokComponent},
   {path: 'meccsek', component: MeccsComponent}
 ];
+@NgModule({
+  imports: [RouterModule.forChild(appRoutes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

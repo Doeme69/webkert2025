@@ -1,0 +1,32 @@
+<mat-card>
+  <h2>Regisztráció</h2>
+  <form #register>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Név</mat-label>
+      <input matInput name="name" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Felhasználó név</mat-label>
+      <input matInput name="username"  required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Jelszó</mat-label>
+      <input matInput name="password"  type="password" required />
+    </mat-form-field>
+
+    <label>Én egy...</label>
+    <br>
+    <mat-radio-group name="role" required>
+      <mat-radio-button value="jatekos">Játékos</mat-radio-button>
+      <mat-radio-button value="biro">Bíró</mat-radio-button>
+    </mat-radio-group>
+    <br>
+    <label>vagyok</label>
+
+    <div style="margin-top: 20px;">
+      <button mat-raised-button color="primary" type="submit" >Regisztrálok</button>
+    </div>
+  </form>
+</mat-card>
