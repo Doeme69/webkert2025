@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,5 +19,7 @@ import { MatCardModule } from '@angular/material/card';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+
+
 
 }

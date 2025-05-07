@@ -28,4 +28,10 @@ import {MatCardModule} from '@angular/material/card';
 })
 export class AppComponent {
   title = 'webkertropi';
+
+  isLoggedIn = false;
+
+  checkLogin() {
+    this.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  }
 }
