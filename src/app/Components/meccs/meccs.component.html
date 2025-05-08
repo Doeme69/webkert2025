@@ -1,1 +1,64 @@
-<p>meccs works!</p>
+
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Új mérkőzés létrehozása</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+    <form [formGroup]="meccsForm" class="match-form">
+        <mat-label>Csapatok kiválasztása:</mat-label>
+        <mat-form-field appearance="fill">
+            <mat-label>Hazai csapat</mat-label>
+            <mat-select formControlName="hazai">
+                @for (team of teams; track team){
+                <mat-option [value] = "team.nev" >
+                    {{team.nev}}
+                </mat-option>
+            }
+            </mat-select>
+            </mat-form-field>
+
+            <span class="vs-text">VS</span>
+
+            <mat-form-field appearance="fill">
+            <mat-label>Vendég csapat</mat-label>
+            <mat-select formControlName="vendeg">
+                @for (team of teams; track team){
+                <mat-option [value] = "team.nev" >
+                    {{team.nev}}
+                </mat-option>
+            }
+            </mat-select>
+        </mat-form-field>
+        <mat-label>Dátum és idő</mat-label>
+        <mat-form-field appearance="fill">
+            <input  matInput
+                    formControlName="datum"
+                    [matDatepicker]="datePicker"
+                    placeholder="Dátum"
+                    (dateChange)="onDateChange($event)"/>
+            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Időpont</mat-label>
+            <input  matInput 
+                    formControlName="ido"
+                    [matTimepicker]="timePicker"
+                    (dateChange)="onTimeChange($event)">
+            <mat-timepicker-toggle matIconSuffix [for]="timePicker"/>
+            <mat-timepicker #timePicker/>
+          </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Helyszín</mat-label>
+            <input  matInput
+                    formControlName="helyszin"
+                    placeholder="Helyszín" />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" (click)="createMatch()">
+            Elfogad
+        </button>
+
+    </form>
+    </mat-card-content>
+</mat-card>
