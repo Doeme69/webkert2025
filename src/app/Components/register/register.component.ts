@@ -4,7 +4,11 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
+import { User } from '../../Model/user';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+
 @Component({
   selector: 'app-register',
   imports: [
@@ -12,24 +16,35 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
     MatCardModule,
     MatRadioModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatOptionModule,
+    MatSelectModule,
+    ReactiveFormsModule
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
+
   registerForm = new FormGroup({
     name: new FormControl('', Validators.required),
     username: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    psw: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    email: new FormControl(''/*, [Validators.required, Validators.email]*/),
+    psw: new FormControl(''/*, [Validators.required, Validators.minLength(6)]*/),
     role: new FormControl('', Validators.required)
   })
 
-  onSubmit() {
-    if (this.registerForm.valid) {
-      console.log(this.registerForm.value);
+  registerUser() {
+    const newUser : User = {
+      nev: this.registerForm.value.name!,
+      username: this.registerForm.value.username!,
+      email: this.registerForm.value.email!,
+      jelszo: this.registerForm.value.psw!,
+      role: this.registerForm.value.role!
+    }
 
+    if (this.registerForm.valid) {
+      console.log(newUser);
     } else {
       console.log('Form is invalid');
     }

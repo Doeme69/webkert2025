@@ -14,7 +14,6 @@ import { Meccs } from '../../Model/meccs';
 import { Biro } from '../../Model/biro';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MeccsService } from '../../Services/meccs.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabsModule, MatTab, MatTabGroup } from '@angular/material/tabs';
 
 @Component({
@@ -46,9 +45,8 @@ import { MatTabsModule, MatTab, MatTabGroup } from '@angular/material/tabs';
 export class MeccsComponent {
 
   constructor(
-    private meccsService: MeccsService,
-    private snackBar: MatSnackBar
-  ) { }
+    private meccsService: MeccsService
+    ) { }
 
   teams: Csapat[] = [
     {

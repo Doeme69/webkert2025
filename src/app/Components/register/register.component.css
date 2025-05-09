@@ -1,9 +1,23 @@
 mat-card {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
+  margin: 3% 40%;
+  align-items: center;
+  max-width: 20%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.full-width {
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+button[type="submit"] {
+  margin-top: 16px;
 }
