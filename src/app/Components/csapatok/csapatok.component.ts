@@ -8,6 +8,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AuthService } from '../../Services/auth.service';
 import { CsapatService } from '../../Services/csapat.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 
 @Component({
   imports: [
@@ -16,6 +21,10 @@ import { CsapatService } from '../../Services/csapat.service';
     MatInputModule,
     MatButtonModule,
     MatTabsModule,
+    MatIconModule,
+    MatListModule,
+    MatDividerModule,
+    MatCheckboxModule,
     ReactiveFormsModule
   ],
   selector: 'app-csapatok',
@@ -26,8 +35,14 @@ export class CsapatokComponent {
 
   constructor(private authService: AuthService, private csapatService: CsapatService) {}
 
-   csapatForm = new FormGroup({
+  searchResult: any;
+
+  csapatForm = new FormGroup({
     nev: new FormControl('', Validators.required)
+  });
+
+  searchForm = new FormGroup({
+    username: new FormControl('', Validators.required)
   });
 
   createTeam() {
@@ -45,6 +60,16 @@ export class CsapatokComponent {
 
       console.log('New team:', newTeam);
       }
+  }
+   
+  async searchUser(){
+    const searchedUser = await this.csapatService.searchUser(this.searchForm.value.username!);
+    this.searchResult = searchedUser;
+  }
+
+  addPlayer(){
+    console.log('Inviting player:', this.searchResult);
+    this.csapatService.addPlayerToTeam(this.searchResult)
   }
 
   isPlayer() {

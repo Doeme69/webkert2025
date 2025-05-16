@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../Model/user';
 import { Auth, authState, signInWithEmailAndPassword, User as FireBaseUser, createUserWithEmailAndPassword } from '@angular/fire/auth';
-import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -20,15 +20,27 @@ export class AuthService {
     this.currentUser = authState(this.auth);
   }
 
-  signIn(email: string, password: string) {
-    console.log('Attempting to sign in with email:', email);
-    console.log('Attempting to sign in with password:', password);
+  async signIn(email: string, password: string) {
+    const loggedUser = await signInWithEmailAndPassword(this.auth, email, password);
     
-    return signInWithEmailAndPassword(this.auth, email, password)
+    const userRef = doc(this.firestore, 'users', loggedUser.user.uid);
+    const userDoc = await getDoc(userRef);
+    
+    if (userDoc.exists()) {
+      const userData = userDoc.data() as User;
+      this.setRole(userData);
+      if (userData.csapat) {
+        localStorage.setItem('userTeam', userData.csapat);
+       
+      }
+    }
+    localStorage.setItem('isLoggedIn', 'true');
+    return loggedUser;
   }
   
   signOut() {
     localStorage.setItem('isLoggedIn', 'false');
+    localStorage.clear();
     return this.auth.signOut().then(() => {
       this.router.navigate(['/login']);
     });
@@ -56,6 +68,7 @@ export class AuthService {
         username: user.username,
         email: user.email,
         role: user.role,
+        jelszo: user.jelszo,
         csapat: user.csapat || ''
       });
 
@@ -70,7 +83,7 @@ export class AuthService {
 
   private async createUserData(userId: string, userData: Partial<User>): Promise<void> {
     try {
-      const userRef = doc(this.firestore, 'users', userId);
+      const userRef = doc(this.firestore, 'users', userData.username!);
       await setDoc(userRef, {
         ...userData,
         createdAt: new Date()

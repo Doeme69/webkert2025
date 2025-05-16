@@ -15,13 +15,13 @@ export class LoginService {
 
   loginUser(email: string, password: string) {
     this.authService.signIn(email, password)
-          .then(userCredential => {
-            console.log('Login successful:', userCredential.user);
-            this.authService.updateLoginStatus(true);
-            this.router.navigateByUrl('/home');
-          })
-          .catch(error => {            
-            alert('Invalid email or password:');
+        .then(userCredential => {
+          console.log('Login successful:', userCredential.user);
+          this.authService.updateLoginStatus(true);
+          this.router.navigate(['/home']);
+        })
+        .catch(error => {            
+          alert('Invalid email or password:');
       });
     }
 }

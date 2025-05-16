@@ -27,16 +27,42 @@
             </mat-card-content>
         </mat-card>
     </mat-tab>
-    @if (isPlayer()) { <mat-tab label="Játékosok hozzáadása">
+    <!--@if (isPlayer()) {--> <mat-tab label="Játékosok hozzáadása">
         <mat-card>
             <mat-card-header>
-                <mat-card-title>Adj hozzá játékosokat!</mat-card-title>
+                <mat-card-title>Játékosok keresése</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <!-- Add your player join form here -->
-                <p>Itt tudsz csatlakozni egy csapathoz</p>
+                <form [formGroup]="searchForm" class="search-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Felhasználónév</mat-label>
+                        <input matInput 
+                            formControlName="username" 
+                            placeholder="Keresés felhasználónév alapján">
+                        <button mat-icon-button matSuffix (click)="searchUser()">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </form>
+
+                @if (searchResult) {
+                    <mat-list>
+                        <mat-list-item>
+                            <div class="user-item">
+                                <span>{{searchResult.nev}}</span>
+                              
+                                <button mat-raised-button 
+                                        color="primary"
+                                        [disabled]="searchResult.csapat != ''"
+                                        (click)="addPlayer()">
+                                    {{searchResult.csapat ? 'Már csapatban van' : 'Hozzáadás'}}
+                                </button>
+                            </div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                    </mat-list>
+                }
             </mat-card-content>
         </mat-card>
     </mat-tab>
-    }
 </mat-tab-group>

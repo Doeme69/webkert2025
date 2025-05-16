@@ -37,8 +37,6 @@ export class LoginComponent {
   login(){
     if(this.loginForm.valid){
       this.loginService.loginUser(this.loginForm.value.email!, this.loginForm.value.password!);
-
-      //this.router.navigateByUrl('/home');
     } else {
       alert('Please fill in all fields');
     }
