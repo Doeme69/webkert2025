@@ -1,19 +1,29 @@
 <mat-card>
   <h2>Bejelentkezés</h2>
-  <form #loginForm="ngForm">
-
+  <form [formGroup]="loginForm">
     <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Felhasználó név</mat-label>
-      <input matInput name="username" required />
+      <mat-label>Email</mat-label>
+      <input  matInput
+              name="email" 
+              formControlName="email"
+              required />
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Jelszó</mat-label>
-      <input matInput name="password"  type="password" required />
+      <input  matInput
+              name="password" 
+              type="password" 
+              formControlName="password"
+              required />
     </mat-form-field>
 
     <div style="margin-top: 20px;">
-      <button mat-raised-button color="accent" type="submit" >Bejelentkezés</button>
+      <button mat-raised-button
+              color="accent" 
+              type="submit" 
+              (click)="login()">
+              Bejelentkezés</button>
     </div>
   </form>
 </mat-card>

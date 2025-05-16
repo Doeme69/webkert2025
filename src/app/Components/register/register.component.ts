@@ -8,6 +8,8 @@ import {FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/
 import { User } from '../../Model/user';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { Router } from '@angular/router';
+import { RegisterService } from '../../Services/register.service';
 
 @Component({
   selector: 'app-register',
@@ -26,25 +28,32 @@ import { MatSelectModule } from '@angular/material/select';
 })
 export class RegisterComponent {
 
+  constructor(
+    private router: Router,
+    private registerService: RegisterService
+  ){}
+
   registerForm = new FormGroup({
     name: new FormControl('', Validators.required),
     username: new FormControl('', Validators.required),
-    email: new FormControl(''/*, [Validators.required, Validators.email]*/),
-    psw: new FormControl(''/*, [Validators.required, Validators.minLength(6)]*/),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    psw: new FormControl('', [Validators.required, Validators.minLength(6)]),
     role: new FormControl('', Validators.required)
   })
 
-  registerUser() {
+  async registerUser() {
     const newUser : User = {
       nev: this.registerForm.value.name!,
       username: this.registerForm.value.username!,
       email: this.registerForm.value.email!,
       jelszo: this.registerForm.value.psw!,
-      role: this.registerForm.value.role!
+      role: this.registerForm.value.role!,
+      csapat: ''
     }
 
     if (this.registerForm.valid) {
-      console.log(newUser);
+      this.registerService.registerUser(newUser);
+      //this.router.navigateByUrl('/home')
     } else {
       console.log('Form is invalid');
     }
