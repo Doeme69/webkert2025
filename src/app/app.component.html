@@ -2,11 +2,16 @@
 <mat-toolbar>
   <span class="logo">My App</span>
   <span class="spacer"></span>
-  <a mat-button routerLink="" routerLinkActive="active" >Home</a>
+  <a mat-button routerLink="" routerLinkActive="active">Home</a>
   <a mat-button routerLink="/csapatok">Csapatok</a>
   <a mat-button routerLink="/meccsek">Meccsek</a>
-  <a mat-button routerLink="/login">Bejelentkezés</a>
-  <a mat-button routerLink="/register" routerLinkActive="active">Regisztráció</a>
+  <!--@if (isLoggedIn == false) {-->
+    <a mat-button routerLink="/login">Bejelentkezés</a>
+    <a mat-button routerLink="/register" routerLinkActive="active">Regisztráció</a>
+  <!--}-->
+  <!--@if (isLoggedIn == true) {-->
+    <a mat-button (click)="logout()">Kijelentkezés</a>
+  <!--}-->
 </mat-toolbar>
 
 <router-outlet></router-outlet>

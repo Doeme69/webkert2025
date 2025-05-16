@@ -11,7 +11,7 @@ import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/m
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { Csapat } from '../../Model/csapat';
 import { Meccs } from '../../Model/meccs';
-import { Biro } from '../../Model/biro';
+import { User } from '../../Model/user';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MeccsService } from '../../Services/meccs.service';
 import { MatTabsModule, MatTab, MatTabGroup } from '@angular/material/tabs';
@@ -51,7 +51,7 @@ export class MeccsComponent {
   teams: Csapat[] = [
     {
       nev: 'Team 1',
-      jatekoksok: [],
+      jatekosok: '',
       csoport: 'A',
       pontszam: 0,
       gyozelem: 0,
@@ -59,7 +59,7 @@ export class MeccsComponent {
     },
     {
       nev: 'Team 2',
-      jatekoksok: [],
+      jatekosok: '',
       csoport: 'A',
       pontszam: 3,
       gyozelem: 1,
@@ -67,7 +67,7 @@ export class MeccsComponent {
     },
     {
       nev: 'Team 3',
-      jatekoksok: [],
+      jatekosok: '',
       csoport: 'B',
       pontszam: 6,
       gyozelem: 2,
@@ -75,7 +75,7 @@ export class MeccsComponent {
     },
     {
       nev: 'Team 4',
-      jatekoksok: [],
+      jatekosok: '',
       csoport: 'B',
       pontszam: 9,
       gyozelem: 3,
@@ -86,7 +86,7 @@ export class MeccsComponent {
   meccsForm = new FormGroup({
     hazai: new FormControl<Csapat>({
       nev: '',
-      jatekoksok: [],
+      jatekosok: '',
       csoport: '',
       pontszam: 0,
       gyozelem: 0,
@@ -94,7 +94,7 @@ export class MeccsComponent {
     }, Validators.required),
     vendeg: new FormControl<Csapat>({
       nev: '',
-      jatekoksok: [],
+      jatekosok: '',
       csoport: '',
       pontszam: 0,
       gyozelem: 0,
@@ -103,7 +103,7 @@ export class MeccsComponent {
     datum: new FormControl('', Validators.required),
     ido: new FormControl('', Validators.required),
     helyszin: new FormControl('', Validators.required),
-    biro: new FormControl<Biro>({
+    biro: new FormControl<User>({
       nev: '',
       username: '',
       email: '',

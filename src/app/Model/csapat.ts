@@ -1,8 +1,9 @@
-import {Jatekos} from './jatekos';
+import { Jatekos } from './jatekos';
+import { User } from './user';
 
 export interface Csapat {
   nev:string;
-  jatekoksok: Jatekos[];
+  jatekosok: string;
   csoport?: string;
   pontszam: number;
   gyozelem: number;

@@ -5,6 +5,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { LoginService } from '../../Services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   imports: [
@@ -12,14 +15,33 @@ import { MatCardModule } from '@angular/material/card';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatCardModule
-  ],
+    MatCardModule,
+    ReactiveFormsModule
+    ],
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  
+  constructor(
+    private loginService: LoginService,
+    private router: Router
+  ) { }
 
+  loginForm = new FormGroup({
+    email: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required)
+  })
 
+  login(){
+    if(this.loginForm.valid){
+      this.loginService.loginUser(this.loginForm.value.email!, this.loginForm.value.password!);
+
+      //this.router.navigateByUrl('/home');
+    } else {
+      alert('Please fill in all fields');
+    }
+  }
 
 }
