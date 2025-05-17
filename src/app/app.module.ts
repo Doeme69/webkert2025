@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import {AppComponent} from './app.component';
 import {HomeComponent} from './Components/home/home.component';
 import {JatekosokComponent} from './Components/jatekosok/jatekosok.component';
@@ -18,15 +17,23 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { provideStorage, getStorage } from '@angular/fire/storage';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCfR5wKFe_-JGbCo_-CajrBhS0DQLZww7s",
+  authDomain: "webkertropi.firebaseapp.com",
+  projectId: "webkertropi",
+  storageBucket: "webkertropi.firebasestorage.app",
+  messagingSenderId: "731566050483",
+  appId: "1:731566050483:web:148913ca5a2a334a9574c6"
+};
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    JatekosokComponent,
-    LoginComponent,
-    RegisterComponent,
-    MeccsComponent
+
   ],
   imports: [
     BrowserModule,
@@ -35,12 +42,24 @@ import {FormsModule} from '@angular/forms';
     MatToolbar,
     MatButtonModule,
     FormsModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
     MatInputModule,
     MatRadioModule,
-    MatCardModule
+    MatCardModule,
+    AppComponent,
+    HomeComponent,
+    JatekosokComponent,
+    LoginComponent,
+    RegisterComponent,
+    MeccsComponent
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()),
+    provideAuth(() => getAuth())
+  ],
+  //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppModule { }
+
+const app = initializeApp(firebaseConfig);
