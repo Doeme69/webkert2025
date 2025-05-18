@@ -45,4 +45,11 @@ export class CsapatService {
     const currentPlayers = csapatDoc.docs[0].data()['jatekosok'] || '';
     await updateDoc(csapatRef, { jatekosok: currentPlayers + player.username + ',' });
   }
+
+  async getCsapatok(): Promise<Csapat[]> {
+    const csapatokRef = collection(this.firestore, 'teams');
+    const csapatokSnapshot = await getDocs(csapatokRef);
+    const csapatokList: Csapat[] = csapatokSnapshot.docs.map(doc => doc.data() as Csapat);    
+    return csapatokList;
+  }
 }

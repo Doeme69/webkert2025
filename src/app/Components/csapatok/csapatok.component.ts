@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Csapat } from '../../Model/csapat';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { NgModule } from '@angular/core';
+import { MatTableModule } from '@angular/material/table';
 
 
 @Component({
@@ -25,15 +27,23 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatListModule,
     MatDividerModule,
     MatCheckboxModule,
+    MatTableModule,
     ReactiveFormsModule
   ],
   selector: 'app-csapatok',
   templateUrl: './csapatok.component.html',
   styleUrl: './csapatok.component.css'
 })
-export class CsapatokComponent {
+export class CsapatokComponent implements OnInit {
 
   constructor(private authService: AuthService, private csapatService: CsapatService) {}
+
+  osszesCsapat: Csapat[] = [];
+  displayedColumns: string[] = ['nev', 'csoport', 'gyozelem', 'veszteseg', 'pontszam'];
+
+  async ngOnInit(){
+    this.osszesCsapat = await this.csapatService.getCsapatok();
+  }
 
   searchResult: any;
 
