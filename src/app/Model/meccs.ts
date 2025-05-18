@@ -1,11 +1,8 @@
-import { Biro } from "./biro";
-import { Csapat } from "./csapat";
-
 export interface Meccs {
-    hazai: Csapat;
-    vendeg: Csapat;
+    hazai: string;
+    vendeg: string;
     datum: string;
     ido: string;
     helyszin: string;
-    biro: Biro;
+    biro?: string;
 }

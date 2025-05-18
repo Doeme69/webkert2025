@@ -1,7 +1,35 @@
 
 <mat-tab-group>
     <mat-tab label="Mérkőzések">
-        asd
+        <table mat-table [dataSource]="matches" class="mat-elevation-z8">
+            <ng-container matColumnDef="hazai">
+                <th mat-header-cell *matHeaderCellDef> Hazai csapat </th>
+                <td mat-cell *matCellDef="let match"> {{match.hazai}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="vendeg">
+                <th mat-header-cell *matHeaderCellDef> Vendég csapat </th>
+                <td mat-cell *matCellDef="let match"> {{match.vendeg}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="datum">
+                <th mat-header-cell *matHeaderCellDef> Dátum </th>
+                <td mat-cell *matCellDef="let match"> {{match.datum}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ido">
+                <th mat-header-cell *matHeaderCellDef> Időpont </th>
+                <td mat-cell *matCellDef="let match"> {{match.ido}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="helyszin">
+                <th mat-header-cell *matHeaderCellDef> Helyszín </th>
+                <td mat-cell *matCellDef="let match"> {{match.helyszin}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
     </mat-tab>
     <mat-tab label="Mérkőzés létrehozása">
         <mat-card>
@@ -64,7 +92,6 @@
                     <button mat-raised-button color="primary" 
                             type="submit" 
                             (click)="createMatch()"
-                            [disabled]="meccsForm.invalid"
                             >
                         Elfogad
                     </button>

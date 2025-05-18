@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatButton } from '@angular/material/button';
 import { FormGroup, FormsModule, FormControl, Validators } from '@angular/forms';
@@ -15,6 +15,8 @@ import { User } from '../../Model/user';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MeccsService } from '../../Services/meccs.service';
 import { MatTabsModule, MatTab, MatTabGroup } from '@angular/material/tabs';
+import { CsapatService } from '../../Services/csapat.service';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-meccs',
@@ -37,80 +39,38 @@ import { MatTabsModule, MatTab, MatTabGroup } from '@angular/material/tabs';
     ReactiveFormsModule,
     MatTabsModule,
     MatTab,
-    MatTabGroup
+    MatTabGroup,
+    MatTableModule
   ],
   templateUrl: './meccs.component.html',
   styleUrl: './meccs.component.css'
 })
-export class MeccsComponent {
+export class MeccsComponent implements AfterViewInit {
 
   constructor(
-    private meccsService: MeccsService
+    private meccsService: MeccsService,
+    private csapatService: CsapatService
     ) { }
 
-  teams: Csapat[] = [
-    {
-      nev: 'Team 1',
-      jatekosok: '',
-      csoport: 'A',
-      pontszam: 0,
-      gyozelem: 0,
-      veszteseg: 0
-    },
-    {
-      nev: 'Team 2',
-      jatekosok: '',
-      csoport: 'A',
-      pontszam: 3,
-      gyozelem: 1,
-      veszteseg: 0
-    },
-    {
-      nev: 'Team 3',
-      jatekosok: '',
-      csoport: 'B',
-      pontszam: 6,
-      gyozelem: 2,
-      veszteseg: 1
-    },
-    {
-      nev: 'Team 4',
-      jatekosok: '',
-      csoport: 'B',
-      pontszam: 9,
-      gyozelem: 3,
-      veszteseg: 0
-    }
-  ];
+  teams: Csapat[] = [];
+  matches: Meccs[] = [];
+
+  displayedColumns: string[] = ['hazai', 'vendeg', 'datum', 'ido', 'helyszin'];
+
+  async ngAfterViewInit() {
+    this.teams = await this.csapatService.getCsapatok();
+    this.matches = await this.meccsService.getMatches();
+    console.log(this.matches);
+    
+  }
 
   meccsForm = new FormGroup({
-    hazai: new FormControl<Csapat>({
-      nev: '',
-      jatekosok: '',
-      csoport: '',
-      pontszam: 0,
-      gyozelem: 0,
-      veszteseg: 0
-    }, Validators.required),
-    vendeg: new FormControl<Csapat>({
-      nev: '',
-      jatekosok: '',
-      csoport: '',
-      pontszam: 0,
-      gyozelem: 0,
-      veszteseg: 0
-    }, Validators.required),
+    hazai: new FormControl('', Validators.required),
+    vendeg: new FormControl('', Validators.required),
     datum: new FormControl('', Validators.required),
     ido: new FormControl('', Validators.required),
-    helyszin: new FormControl('', Validators.required),
-    biro: new FormControl<User>({
-      nev: '',
-      username: '',
-      email: '',
-      jelszo: '',
-      role: 'biro'
-    }, Validators.required)
-  })
+    helyszin: new FormControl('', Validators.required)
+    });
 
   onDateChange(event: any) {
     const date = event.value;
@@ -140,9 +100,8 @@ export class MeccsComponent {
       vendeg: this.meccsForm.value.vendeg!,
       datum: this.meccsForm.value.datum!,
       ido: this.meccsForm.value.ido!.toString().split(' ')[4],
-      helyszin: this.meccsForm.value.helyszin!,
-      biro: this.meccsForm.value.biro!
-    }
+      helyszin: this.meccsForm.value.helyszin!
+      }
     
     if (this.meccsForm.valid) {
       // TODO: Implement same team validation handling
@@ -163,12 +122,12 @@ export class MeccsComponent {
 
   }
   //TODO : Implement same team validation handling
-  checkForSameTeam() {
+  /*checkForSameTeam() {
     if (this.meccsForm.value.hazai?.nev == this.meccsForm.value.vendeg?.nev) {
       this.meccsForm.get('vendeg')?.setErrors({ sameTeam: true });
       return true;
     }
     return false;
-  }
+  }*/
 }
  
